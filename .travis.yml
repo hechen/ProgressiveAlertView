@@ -1,0 +1,15 @@
+osx_image: xcode9
+language: objective-c
+
+
+before_script:
+    - cd Example
+    - pod install
+
+script:
+    - xcodebuild clean build -sdk iphonesimulator11.0 -workspace ProgressiveAlertView.xcworkspace -scheme ProgressiveAlertView-Example CODE_SIGNING_REQUIRED=NO
+    
+    
+branches:
+  only:
+    - master

@@ -1,0 +1,6 @@
+framework module ProgressiveAlertView {
+  umbrella header "ProgressiveAlertView-umbrella.h"
+
+  export *
+  module * { export * }
+}
