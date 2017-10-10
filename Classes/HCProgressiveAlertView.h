@@ -7,7 +7,7 @@
 #import <UIKit/UIKit.h>
 
 extern NSString * _Nonnull const HCPAVDidReceiveTouchEventNotification;
-extern NSString * _Nonnull const HCPAVDidTouchDownInsideCancelButtonNotification;
+extern NSString * _Nonnull const HCPAVDidTouchDownInsideBottomButtonNotification;
 extern NSString * _Nonnull const HCPAVWillDisappearNotification;
 extern NSString * _Nonnull const HCPAVDidDisappearNotification;
 extern NSString * _Nonnull const HCPAVWillAppearNotification;
@@ -68,11 +68,13 @@ NS_ASSUME_NONNULL_BEGIN
 // --------------------------------------------------
 // Parameters for business logic
 
-@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *topTitle;
+
+@property (nonatomic) NSString *bottomButtonText;
 
 @property (nonatomic) CGFloat progress;
 
-@property (nonatomic, copy) void(^cancelButtonClickedBlock)(void);
+@property (nonatomic, copy) void(^bottomButtonClickedBlock)(void);
 
 @property (nonatomic, copy) void(^backgroundViewClickedBlock)(void);
 

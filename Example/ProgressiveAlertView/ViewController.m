@@ -55,7 +55,9 @@
 - (void)beginProcessing {
     [[HCProgressiveAlertView sharedView] show];
 
-    [HCProgressiveAlertView sharedView].title = @"Downloading...";
+//    [HCProgressiveAlertView sharedView].topTitle = @"Downloading...";
+    [HCProgressiveAlertView sharedView].topTitle = @"粘贴自\"Chen's MacBook Pro\" ...";
+    [HCProgressiveAlertView sharedView].bottomButtonText = @"取消";
     [HCProgressiveAlertView sharedView].backgroundViewClickedBlock  = ^{
 #ifdef DEBUG
         NSLog(@"Alert View BackgroundView Clicked...");
@@ -63,7 +65,7 @@
     };
 
     __weak typeof(self) weakSelf = self;
-    [HCProgressiveAlertView sharedView].cancelButtonClickedBlock = ^{
+    [HCProgressiveAlertView sharedView].bottomButtonClickedBlock = ^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
 
         [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf selector:@selector(increaseProgress) object:nil];
@@ -107,7 +109,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleProgressAlertViewWillDisappear:) name:HCPAVWillDisappearNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleProgressAlertViewDidDisappear:) name:HCPAVDidDisappearNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleProgressAlertViewBackgroundViewTouchDownEvent:) name:HCPAVDidReceiveTouchEventNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleProgressAlertViewCancelButtonTouchDownEvent:) name:HCPAVDidTouchDownInsideCancelButtonNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleProgressAlertViewCancelButtonTouchDownEvent:) name:HCPAVDidTouchDownInsideBottomButtonNotification object:nil];
 }
 
 - (void)unregisterNotifications {
@@ -115,7 +117,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HCPAVWillDisappearNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HCPAVDidDisappearNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HCPAVDidReceiveTouchEventNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:HCPAVDidTouchDownInsideCancelButtonNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HCPAVDidTouchDownInsideBottomButtonNotification object:nil];
 }
 
 - (void)handleProgressAlertViewWillAppear:(NSNotification *)notification {

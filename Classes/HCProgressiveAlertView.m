@@ -12,7 +12,7 @@
 
 
 NSString * _Nonnull const HCPAVDidReceiveTouchEventNotification = @"HCPAVDidReceiveTouchEventNotification";
-NSString * _Nonnull const HCPAVDidTouchDownInsideCancelButtonNotification = @"HCPAVDidTouchDownInsideCancelButtonNotification";
+NSString * _Nonnull const HCPAVDidTouchDownInsideBottomButtonNotification = @"HCPAVDidTouchDownInsideBottomButtonNotification";
 NSString * _Nonnull const HCPAVWillDisappearNotification = @"HCPAVWillDisappearNotification";
 NSString * _Nonnull const HCPAVDidDisappearNotification = @"HCPAVDidDisappearNotification";
 NSString * _Nonnull const HCPAVWillAppearNotification = @"HCPAVWillAppearNotification";
@@ -53,7 +53,7 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
 
 @property (nonatomic) UIView *separatorView;
 
-@property (nonatomic) UIButton *cancelButton;
+@property (nonatomic) UIButton *bottomButton;
 
 @end
 
@@ -78,7 +78,7 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
         self.ringView.alpha = 0;
         self.titleLabel.alpha = 0;
         self.ringView.alpha = 0;
-        self.cancelButton.alpha = 0;
+        self.bottomButton.alpha = 0;
         self.separatorView.alpha = 0;
         self.completionView.alpha = 0;
 
@@ -224,6 +224,7 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
     if (!_titleLabel) {
         _titleLabel = [UILabel new];
         _titleLabel.numberOfLines = 0;
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
 
     if (!_titleLabel.superview) {
@@ -250,31 +251,40 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
     return _separatorView;
 }
 
-- (UIButton *)cancelButton {
-    if (!_cancelButton) {
-        _cancelButton = [UIButton new];
-        [_cancelButton setBackgroundColor:[UIColor clearColor]];
-        [_cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-        [_cancelButton addTarget:self action:@selector(handleCancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+- (UIButton *)bottomButton {
+    if (!_bottomButton) {
+        _bottomButton = [UIButton new];
+        [_bottomButton setBackgroundColor:[UIColor clearColor]];
+        
+        // default title
+        [_bottomButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        
+        [_bottomButton addTarget:self action:@selector(handleBottomButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
 
-    if (!_cancelButton.superview) {
-        [self.hudView.contentView addSubview:_cancelButton];
+    if (!_bottomButton.superview) {
+        [self.hudView.contentView addSubview:_bottomButton];
     }
 
-    [_cancelButton setTitleColor:self.cancelButtonTextColor forState:UIControlStateNormal];
-    _cancelButton.titleLabel.font = self.cancelButtonTextFont;
+    [_bottomButton setTitleColor:self.cancelButtonTextColor forState:UIControlStateNormal];
+    _bottomButton.titleLabel.font = self.cancelButtonTextFont;
 
-    return _cancelButton;
+    return _bottomButton;
 }
 
 
 #pragma mark - Setter
 
-- (void)setTitle:(NSString *)title {
-    _title = title;
+- (void)setTopTitle:(NSString *)topTitle {
+    _topTitle = topTitle;
+    
+    self.titleLabel.text = topTitle;
+}
 
-    self.titleLabel.text = title;
+- (void)setBottomButtonText:(NSString *)bottomButtonText {
+    _bottomButtonText = bottomButtonText;
+    
+    [self.bottomButton setTitle:bottomButtonText forState:UIControlStateNormal];
 }
 
 - (void)setProgress:(CGFloat)progress {
@@ -388,7 +398,7 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
 
     CGFloat hudWidth = HCPAVHUDWidth;
     CGFloat hudHeight = HCPAVTitleLabelTopMargin + labelHeight + self.progressCircleRadius * 2 + HCPAVRingViewVerticalPadding + HCPAVSeparatorLineHeight + HCPAVCancelButtonHeight;
-    if (self.title.length > 0) {
+    if (self.titleLabel.text.length > 0) {
         hudHeight += HCPAVRingViewVerticalPadding;
     }
 
@@ -403,7 +413,7 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
     // circle
     // edge | <-> |title | <-> | circle |
     CGFloat ringViewY = HCPAVTitleLabelTopMargin;
-    if (self.title.length > 0) {
+    if (self.topTitle.length > 0) {
         ringViewY += labelHeight;
         ringViewY += HCPAVRingViewVerticalPadding;
     }
@@ -414,8 +424,8 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
     // separator
     self.separatorView.frame = CGRectMake(0, hudHeight - HCPAVCancelButtonHeight - HCPAVSeparatorLineHeight, hudWidth, HCPAVSeparatorLineHeight);
 
-    // cancel button
-    self.cancelButton.frame = CGRectMake(0, hudHeight - HCPAVCancelButtonHeight, hudWidth, HCPAVCancelButtonHeight);
+    // bottom button
+    self.bottomButton.frame = CGRectMake(0, hudHeight - HCPAVCancelButtonHeight, hudWidth, HCPAVCancelButtonHeight);
 
     [CATransaction commit];
 }
@@ -579,7 +589,7 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
     self.titleLabel.alpha = 1.f;
     self.ringView.alpha = 1.f;
     self.placeholderRingView.alpha = 1.f;
-    self.cancelButton.alpha = 1;
+    self.bottomButton.alpha = 1;
     self.separatorView.alpha = 1;
 
     if (self.progress >= 1) {
@@ -599,7 +609,7 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
     self.titleLabel.alpha = 0;
     self.ringView.alpha = 0;
     self.placeholderRingView.alpha = 0;
-    self.cancelButton.alpha = 0;
+    self.bottomButton.alpha = 0;
     self.separatorView.alpha = 0;
     self.completionView.alpha = 0;
 }
@@ -607,17 +617,18 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
 
 #pragma mark - Action
 
-- (void)handleCancelButtonClicked:(id)sender {
-    if (sender != self.cancelButton) {
+- (void)handleBottomButtonClicked:(id)sender {
+    if (sender != self.bottomButton) {
         return;
     }
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:HCPAVDidTouchDownInsideCancelButtonNotification
-                                                        object:self
-                                                      userInfo:nil];
-
-    if (self.cancelButtonClickedBlock) {
-        self.cancelButtonClickedBlock();
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:HCPAVDidTouchDownInsideBottomButtonNotification
+     object:self
+     userInfo:nil];
+    
+    if (self.bottomButtonClickedBlock) {
+        self.bottomButtonClickedBlock();
     }
 }
 
@@ -625,11 +636,12 @@ static const CGFloat HCPAVCompletionSignHeight = 15.f;
     if (sender != self.controlView) {
         return;
     }
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:HCPAVDidReceiveTouchEventNotification
-                                                        object:self
-                                                      userInfo:nil];
-
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:HCPAVDidReceiveTouchEventNotification
+     object:self
+     userInfo:nil];
+    
     if (self.backgroundViewClickedBlock) {
         self.backgroundViewClickedBlock();
     }
