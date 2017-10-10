@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "ProgressiveAlertView"
-  s.version      = "0.0.1"
-  s.summary      = "ProgressiveAlertView is progressive alert view for iOS, liked universal clipboard."
+  s.version      = "0.0.2"
+  s.summary      = "ProgressiveAlertView is simply a progressive alert view for iOS, liked universal clipboard."
   s.license      = { :type => 'MIT' }
   s.screenshots  = "http://7xilk1.com1.z0.glb.clouddn.com/progressiveAlertView.jpg"
   s.author       = { "hechen" => "hechen4815463@gmail.com" }
