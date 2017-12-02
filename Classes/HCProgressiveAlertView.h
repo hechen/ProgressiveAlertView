@@ -6,10 +6,19 @@
 
 #import <UIKit/UIKit.h>
 
+/// Notification received when background view receive touch event.
 extern NSString * _Nonnull const HCPAVDidReceiveTouchEventNotification;
+
+/// Notification received when bottom button receive touch down inside event.
 extern NSString * _Nonnull const HCPAVDidTouchDownInsideBottomButtonNotification;
+
+/// Notification received when alert view will disappear (at the beginning of disappear animation).
 extern NSString * _Nonnull const HCPAVWillDisappearNotification;
+
+/// Notification received when alert view did disappear (at the end of disappear animation).
 extern NSString * _Nonnull const HCPAVDidDisappearNotification;
+
+/// Notification received when alert view will appear.
 extern NSString * _Nonnull const HCPAVWillAppearNotification;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -90,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)dismiss;
 
-- (void)dismissWithCompletion:(nullable void(^)())completion;
+- (void)dismissWithCompletion:(nullable void(^)(void))completion;
 
 @end
 

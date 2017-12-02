@@ -9,10 +9,10 @@
  * */
 @interface HCCheckMarkView : UIView
 
-// default is BLUE
+/// default is BLUE
 @property (nonatomic) UIColor *strokeColor;
 
-// default is 3
+/// default is 3.f
 @property (nonatomic) CGFloat strokeThickness;
 
 @end

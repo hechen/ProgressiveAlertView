@@ -5,20 +5,17 @@
 #import <UIKit/UIKit.h>
 
 /*
- *  环状 UI
+ *  Circle, which can show progress
  * */
 @interface HCProgressAnimatedView : UIView
 
-/// 环的半径
 @property (nonatomic) CGFloat radius;
 
-/// 环的厚度
 @property (nonatomic) CGFloat strokeThickness;
 
-/// 环的颜色
 @property (nonatomic) UIColor *strokeColor;
 
-/// 当前环末端的位置
+/// affect the progress (0.0 ~ 1.0)
 @property (nonatomic) CGFloat strokeEnd;
 
 @end
