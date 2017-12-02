@@ -13,7 +13,7 @@ An alert-style view that depicts the progress of a task over time, UI copied fro
 
 ### Demo
 
-<img src="http://7xilk1.com1.z0.glb.clouddn.com/progressiveAlertView.gif" width="200">
+<img src="https://github.com/hechen/ProgressiveAlertView/blob/master/.asset/progressiveAlertView.gif" width="200">
 
 
 ### Cocoapods
