@@ -7,7 +7,7 @@
 
 An alert-style view that depicts the progress of a task over time, UI copied from Apple universal clipboard.
 
-<img src="http://7xilk1.com1.z0.glb.clouddn.com/progressiveAlertView.jpg" width="400">
+<img src="https://github.com/hechen/ProgressiveAlertView/raw/master/.asset/demo.jpeg" width="400">
 
 
 
