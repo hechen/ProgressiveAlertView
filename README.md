@@ -13,27 +13,12 @@ An alert-style view that depicts the progress of a task over time, UI copied fro
 
 ### Demo
 
-<img src="https://github.com/hechen/ProgressiveAlertView/blob/master/.asset/progressiveAlertView.gif" width="200">
-
+![Demo](.asset/progressiveAlertView.gif)
 
 ### Cocoapods
 
-CocoaPods is a dependency manager for Cocoa projects.
-
-You can install it with the following command:
-
-$ gem install cocoapods
-
 To integrate ProgressiveAlertView into your Xcode project using CocoaPods, specify it in your Podfile. For example the podfile you define the following:
 
-
 ```
-
 pod 'ProgressiveAlertView'
-
 ```
-
-Please see ProgressiveAlertView.podspec for more information about which subspecs are available.
-
-
-
